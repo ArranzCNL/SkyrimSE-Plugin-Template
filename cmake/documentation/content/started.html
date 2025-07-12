@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Getting Started</title>
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body><div class="section-body">
+
+<h1>Getting Started</h1>
+
+<p>This project enables you to rapidly bootstrap a Skyrim SKSE plugin using CommonLibSSE, supporting both the PO3 and NG forks.</p>
+
+<h3>What to Expect</h3>
+<p>After downloading the repository, run the included bootstrap script <code>CMake_Build.bat</code>. This script will prompt you to configure your new plugin project by entering the following:</p>
+
+<ul>
+  <li><strong>CommonLibSSE variant:</strong> Choose between the powerof3 (PO3) or alandtse (NG) fork</li>
+  <li><strong>Project Name:</strong> Your plugin’s name</li>
+  <li><strong>Author:</strong> Your name or handle</li>
+  <li><strong>Description:</strong> A short description of your plugin</li>
+  <li><strong>Version:</strong> Example: <code>1.0</code></li>
+  <li><strong>Year:</strong> For copyright, e.g., <code>(C) 2025</code></li>
+  <li><strong>License:</strong> Example: <code>MIT</code></li>
+  <li><strong>Template Type:</strong> Select one of the following templates to use as a starting point:
+    <ul>
+      <li><strong>Bare:</strong> Minimal setup with essentials to get your plugin running</li>
+      <li><strong>Basic:</strong> Includes a console hook and event registration for enhanced interaction</li>
+      <li><strong>Menu:</strong> Builds on Basic by adding an ImGui-powered menu interface for easier debugging and controls</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>Optional Dependencies</h3>
+<p>Some useful libraries are included but disabled by default. You can activate them by uncommenting their entries in <code>submodule_config.cmake</code>:</p>
+<ul>
+  <li><strong>ImGui:</strong> Provides UI support included only with the <code>Menu</code> template. This template contains the necessary boilerplate code to get ImGui menus running smoothly.</li>
+  <li><strong>JSON (nlohmann-json):</strong> JSON parsing and serialization</li>
+  <li><strong>SimpleIni:</strong> Lightweight INI file parser</li>
+  <li><strong>TOML:</strong> TOML file format support</li>
+</ul>
+
+<p>Activating these lets you add powerful features without manual setup.</p>
+
+<h3>What Happens Next?</h3>
+<p>Once you complete the prompts, the bootstrap script generates a fully structured plugin project, ready to be built using Git, CMake (≥ 3.24), and Visual Studio 2022.</p>
+<ul>
+  <li>A project folder with organized <code>include/</code>, <code>src/</code>, and other necessary subfolders</li>
+  <li>A configured CMake solution and project files inside the <code>build/</code> directory</li>
+  <li>All selected dependencies downloaded and ready for use</li>
+</ul>
+
+<h3>🔄 Rebuilding After Changes</h3>
+<p>If you add new source or header files, or change your project structure, simply re-run <code>CMake_Build.bat</code> to regenerate the solution. All newly added files will be automatically picked up.</p>
+
+</div></body>
+</html>

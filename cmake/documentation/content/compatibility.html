@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Compatibility</title>
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body><div class="section-body">
+
+<h1>Compatibility Between PO3 and NG Forks (Code-Level)</h1>
+
+<p>The two CommonLibSSE forks supported by this template differ primarily in how they expose internal runtime data:</p>
+
+<ul>
+  <li><strong>NG Fork:</strong> Encapsulates internal data behind accessor functions, such as <code>GetRuntimeData()</code>.</li>
+  <li><strong>PO3 Fork:</strong> Exposes data directly via public members like <code>renderer->data</code>.</li>
+</ul>
+
+<p>Because of these differences, plugin code must use conditional compilation to access data correctly depending on the selected fork. For example:</p>
+
+<pre><code class="cpp">
+#if defined(SKYRIM_SUPPORT_NG)
+    auto& runtimeData = renderer->GetRuntimeData();
+    // Access runtimeData fields here
+#else
+    auto& data = renderer->data;
+    // Access data fields here
+#endif
+</code></pre>
+
+<p>This pattern is common across the API surface and ensures your code compiles and runs correctly with either fork. The macro <code>SKYRIM_SUPPORT_NG</code> is defined automatically when building with the NG fork; otherwise, PO3 compatibility is assumed.</p>
+
+</div></body>
+</html>

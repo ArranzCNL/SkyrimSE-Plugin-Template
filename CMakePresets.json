@@ -1,0 +1,72 @@
+{
+	"version": 5,
+	"cmakeMinimumRequired": {
+		"major": 3,
+		"minor": 24,
+		"patch": 0
+	},
+	"configurePresets": [
+		{
+			"name": "vs2022",
+			"hidden": true,
+			"displayName": "Visual Studio 2022 Base",
+			"description": "Base configuration using Visual Studio 2022",
+			"generator": "Visual Studio 17 2022",
+			"architecture": {
+				"value": "x64",
+				"strategy": "set"
+			},
+			"toolset": "v143",
+			"cacheVariables": {
+				"CMAKE_CONFIGURATION_TYPES": "Debug;RelWithDebInfo",
+				"CMAKE_CXX_STANDARD": "23",
+				"CMAKE_CXX_STANDARD_REQUIRED": "ON",
+				"CMAKE_CXX_EXTENSIONS": "OFF",
+				"CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreaded$<$<CONFIG:Debug>:Debug>",
+				"CMAKE_CXX_FLAGS": "/W4 /sdl /MP /Zc:preprocessor /EHsc /fp:fast /Zc:rvalueCast /permissive- /external:W0",
+				"CMAKE_CXX_FLAGS_DEBUG": "/Zi /Od /RTC1",
+				"CMAKE_CXX_FLAGS_RELWITHDEBINFO": "/Zi /O2 /Ob2 /Oi /GL /DNDEBUG"
+			}
+		},
+		{
+			"name": "vs2022-po3",
+			"inherits": "vs2022",
+			"displayName": "Visual Studio 2022 - powerof3",
+			"description": "Config for powerof3 CommonLibSSE variant",
+			"binaryDir": "${sourceDir}/build/vs2022-po3"
+		},
+		{
+			"name": "vs2022-ng",
+			"inherits": "vs2022",
+			"displayName": "Visual Studio 2022 - ng-alandtse",
+			"description": "Config for ng-alandtse CommonLibSSE variant",
+			"binaryDir": "${sourceDir}/build/vs2022-ng"
+		}
+	],
+	"buildPresets": [
+		{
+			"name": "vs2022-po3-debug",
+			"configurePreset": "vs2022-po3",
+			"configuration": "Debug",
+			"description": "Build Debug for powerof3"
+		},
+		{
+			"name": "vs2022-po3-rel",
+			"configurePreset": "vs2022-po3",
+			"configuration": "RelWithDebInfo",
+			"description": "Build RelWithDebInfo for powerof3"
+		},
+		{
+			"name": "vs2022-ng-debug",
+			"configurePreset": "vs2022-ng",
+			"configuration": "Debug",
+			"description": "Build Debug for alandtse"
+		},
+		{
+			"name": "vs2022-ng-rel",
+			"configurePreset": "vs2022-ng",
+			"configuration": "RelWithDebInfo",
+			"description": "Build RelWithDebInfo for alandtse"
+		}
+	]
+}

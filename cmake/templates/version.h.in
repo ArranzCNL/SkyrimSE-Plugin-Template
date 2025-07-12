@@ -1,0 +1,17 @@
+#pragma once
+
+#define MAKE_STR_HELPER(a_str) #a_str
+#define MAKE_STR(a_str) MAKE_STR_HELPER(a_str)
+
+#define VERSION_MAJOR                       @VERSION_MAJOR@
+#define VERSION_MINOR                       @VERSION_MINOR@
+#define VERSION_REVISION                    @VERSION_PATCH@
+#define VERSION_BUILD                       @VERSION_TWEAK@
+#define VERSION_STR                         MAKE_STR(VERSION_MAJOR) "." MAKE_STR(VERSION_MINOR) "." MAKE_STR(VERSION_REVISION) "." MAKE_STR(VERSION_BUILD)
+#define VERSION_PRODUCTNAME_DESCRIPTION_STR "@PROJECT_DESCRIPTION@" " v" VERSION_STR
+
+#define VERSION_PRODUCTNAME_STR             "@PROJECT_NAME@"
+#define VERSION_YEAR_STR                    "@PROJECT_YEAR@"
+#define VERSION_AUTHOR_STR                  "@PROJECT_AUTHOR@"
+#define VERSION_LICENSE_STR                 "@PROJECT_LICENSE@"
+#define VERSION_COPYRIGHT_STR               VERSION_YEAR_STR " " VERSION_AUTHOR_STR " " VERSION_LICENSE_STR

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Project Structure</title>
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body><div class="section-body">
+
+<h1>Project Structure</h1>
+<p>Once you generate a project using <code>CMake_Build.bat</code>, the folder layout will be organized like this:</p>
+<pre><code>Root/
+ ├── .bin/                      # Output directory for built DLLs
+ ├── .lib/                      # Output directory for static libraries
+ ├── build/                     # CMake build folder (contains generated solution)
+ ├── cmake/                     # Utility scripts and dependency configuration
+ ├── CMake_Build.bat            # Bootstrap script to configure/regenerate project
+ ├── CMakePresets.json          # Presets for debug/release and toolchain support
+ ├── .gitignore                 # Git exclusions
+ ├── CMakeLists.txt             # Root-level CMake configuration
+ ├── MyPluginProject/           # Folder named after your plugin project
+ │   ├── extern/                # External libraries (e.g. CommonLibSSE, ImGui, JSON)
+ │   ├── include/               # Header files (*.h)
+ │   ├── src/                   # Source files (*.cpp)
+ │   ├── pch/                   # Precompiled headers (pch.h / pch.cpp)
+ │   ├── resource/              # Resources (e.g. plugin.rc, plugin.def)
+</code></pre>
+
+<h3>Where to Add Your Code</h3>
+<ul>
+  <li><strong>Header Files:</strong> Add them to <code>MyPluginProject/include/</code></li>
+  <li><strong>Source Files:</strong> Add them to <code>MyPluginProject/src/</code></li>
+  <li><strong>Resource Files:</strong> Use <code>MyPluginProject/resource/</code> for <code>.rc</code>, <code>.def</code>, icons, etc.</li>
+  <li><strong>Precompiled Headers:</strong> Modify <code>MyPluginProject/pch/pch.h</code> and <code>pch.cpp</code> if needed</li>
+</ul>
+
+<h3>Adding New Files</h3>
+<p>After adding new <code>.h</code> or <code>.cpp</code> files, re-run <code>CMake_Build.bat</code> to regenerate your Visual Studio solution and ensure your files are included in the build.</p>
+
+<h3>Visual Studio Filters</h3>
+<p>Filters in Solution Explorer are auto-generated based on your folder structure under <code>include/</code> and <code>src/</code>, so everything stays organized automatically.</p>
+
+</div></body>
+</html>
