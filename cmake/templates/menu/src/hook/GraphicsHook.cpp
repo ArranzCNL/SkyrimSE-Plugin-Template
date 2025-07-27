@@ -29,30 +29,21 @@ namespace Hook {
 			static auto graphics = Graphics::GetSingleton();
 
 			std::call_once(graphics->m_graphicsFlag, []() {
-				const auto renderer = RE::BSGraphics::Renderer::GetSingleton();
+
+				auto renderer = RE::BSGraphics::Renderer::GetSingleton();
+				const auto renderData = PROXY::BSGraphics::Renderer::Data(renderer);
 				REX::W32::GUID const& rexGUID = *reinterpret_cast<const REX::W32::GUID*>(&__uuidof(REX::W32::ID3D11Device));
 
-#if defined(SKYRIM_SUPPORT_NG)
-				graphics->m_info.swapChain = renderer->GetRuntimeData().renderWindows[0].swapChain;
+				graphics->m_info.swapChain = renderData->renderWindows[0].swapChain;
 
 				if (SUCCEEDED(graphics->m_info.swapChain->GetDevice(rexGUID, &graphics->m_info.device))) {
 					graphics->m_info.device->GetImmediateContext(&graphics->m_info.deviceContext);
-					graphics->m_info.windowHandle = reinterpret_cast<HWND>(renderer->GetRuntimeData().renderWindows[0].hWnd);
-					graphics->m_info.windowWidth = renderer->GetRuntimeData().renderWindows[0].windowWidth;
-					graphics->m_info.windowHeight = renderer->GetRuntimeData().renderWindows[0].windowHeight;
-					graphics->m_info.windowPosX = renderer->GetRuntimeData().renderWindows[0].windowX;
-					graphics->m_info.windowPosY = renderer->GetRuntimeData().renderWindows[0].windowY;
-#else
-				graphics->m_info.swapChain = renderer->data.renderWindows[0].swapChain;
+					graphics->m_info.windowHandle = reinterpret_cast<HWND>(renderData->renderWindows[0].hWnd);
+					graphics->m_info.windowWidth = renderData->renderWindows[0].windowWidth;
+					graphics->m_info.windowHeight = renderData->renderWindows[0].windowHeight;
+					graphics->m_info.windowPosX = renderData->renderWindows[0].windowX;
+					graphics->m_info.windowPosY = renderData->renderWindows[0].windowY;
 
-				if (SUCCEEDED(graphics->m_info.swapChain->GetDevice(rexGUID, &graphics->m_info.device))) {
-					graphics->m_info.device->GetImmediateContext(&graphics->m_info.deviceContext);
-					graphics->m_info.windowHandle = reinterpret_cast<HWND>(renderer->data.renderWindows[0].hWnd);
-					graphics->m_info.windowWidth = renderer->data.renderWindows[0].windowWidth;
-					graphics->m_info.windowHeight = renderer->data.renderWindows[0].windowHeight;
-					graphics->m_info.windowPosX = renderer->data.renderWindows[0].windowX;
-					graphics->m_info.windowPosY = renderer->data.renderWindows[0].windowY;
-#endif
 					char windowTitle[MAX_PATH]{};
 					GetWindowTextA(graphics->m_info.windowHandle, windowTitle, sizeof(windowTitle));
 					graphics->m_info.windowTitle = windowTitle;

@@ -52,7 +52,7 @@ namespace SKSE {
 		pluginData.PluginName(VERSION_PRODUCTNAME_STR);
 		pluginData.PluginVersion(REL::Version(VERSION_MAJOR, VERSION_MINOR, VERSION_REVISION, VERSION_BUILD));
 		pluginData.AuthorName(VERSION_AUTHOR_STR);
-		pluginData.AuthorEmail("https://github.com/ArranzCNL/ImprovedCameraSE-NG");
+		pluginData.AuthorEmail("https://github.com/ArranzCNL/SkyrimSE-Plugin-Template");
 		pluginData.UsesAddressLibrary();
 		pluginData.UsesNoStructs();
 

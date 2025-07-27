@@ -3,7 +3,7 @@
 #################################################
 set(COMMONLIBSSE_NAME            "CommonLibSSE")
 set(COMMONLIBSSE_REPO_URL        "https://github.com/alandtse/CommonLibVR")
-set(COMMONLIBSSE_REPO_TAG        "2e8e84e") # Commits on Jun 26, 2025
+set(COMMONLIBSSE_REPO_TAG        "394b105") # Commits on Jul 23, 2025
 set(COMMONLIBSSE_ROOT_DIR        "${PROJECT_EXTERN_ROOT_DIR}/${COMMONLIBSSE_NAME}")
 set(COMMONLIBSSE_EXTERN_ROOT_DIR "${COMMONLIBSSE_ROOT_DIR}/extern")
 #################################################
@@ -22,9 +22,9 @@ FetchContent_Populate(
 #################################################
 # Dependencies
 #################################################
+include(${CMAKE_CURRENT_LIST_DIR}/submodule/directxtk_config.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/submodule/spdlog_config.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/submodule/xbyak_config.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/submodule/directxtk_config.cmake)
 #################################################
 # Patch Project
 #################################################
@@ -33,9 +33,12 @@ set(PATCH_FILES
 	"pch/PCH.cpp"
 	"pch/PCH.h"
 	# include
-	"include/RE/C/CharEvent.h"
+	"include/PROXY/Proxies.h"
+	"include/PROXY/ActorProxy.h"
+	"include/PROXY/ControlMapProxy.h"
+	"include/PROXY/PlayerCharacterProxy.h"
+	"include/PROXY/RendererProxy.h"
 	# src
-	"src/RE/B/BSInputEventQueue.cpp"
 )
 
 foreach(FILE_PATH IN LISTS PATCH_FILES)

@@ -3,7 +3,7 @@
 #################################################
 set(COMMONLIBSSE_NAME            "CommonLibSSE")
 set(COMMONLIBSSE_REPO_URL        "https://github.com/powerof3/CommonLibSSE")
-set(COMMONLIBSSE_REPO_TAG        "6e08379") # Commits on Jul 10, 2025
+set(COMMONLIBSSE_REPO_TAG        "c0debe9") # Commits on Jul 26, 2025
 set(COMMONLIBSSE_ROOT_DIR        "${PROJECT_EXTERN_ROOT_DIR}/${COMMONLIBSSE_NAME}")
 set(COMMONLIBSSE_EXTERN_ROOT_DIR "${COMMONLIBSSE_ROOT_DIR}/extern")
 #################################################
@@ -33,6 +33,11 @@ set(PATCH_FILES
 	"pch/PCH.cpp"
 	"pch/PCH.h"
 	# include
+	"include/PROXY/Proxies.h"
+	"include/PROXY/ActorProxy.h"
+	"include/PROXY/ControlMapProxy.h"
+	"include/PROXY/PlayerCharacterProxy.h"
+	"include/PROXY/RendererProxy.h"
 	# src
 )
 

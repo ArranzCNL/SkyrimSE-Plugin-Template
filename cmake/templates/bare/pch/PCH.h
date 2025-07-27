@@ -2,6 +2,7 @@
 
 #include <RE/Skyrim.h>
 #include <SKSE/SKSE.h>
+#include <PROXY/Proxies.h>
 
 #include <REX/REX/Singleton.h>
 

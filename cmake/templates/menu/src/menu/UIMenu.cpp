@@ -57,7 +57,7 @@ namespace Menu {
 		for (auto event = *a_event; event; event = event->next) {
 
 			if (const auto charEvent = event->AsCharEvent()) {
-				io.AddInputCharacter(charEvent->keycode);
+				io.AddInputCharacter(charEvent->keyCode);
 			}
 			else if (const auto buttonEvent = event->AsButtonEvent()) {
 				auto scanCode = buttonEvent->GetIDCode();

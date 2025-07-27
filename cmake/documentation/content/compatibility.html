@@ -4,31 +4,189 @@
   <meta charset="UTF-8" />
   <title>Compatibility</title>
   <link href="styles.css" rel="stylesheet" />
+  <style>
+    /* Details summary styling */
+    details summary {
+      background-color: #f0f0f0;
+      color: #2a2a2a;
+      font-weight: bold;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 0.3em;
+      border: 1px solid #d0d0d0;
+    }
+
+    /* Add spacing between each collapsible section */
+    details {
+      margin-bottom: 1.5em;
+    }
+
+    /* Table styling */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 0.8em;
+      background-color: #fafafa;
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 0.75em 1em;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    thead {
+      background-color: #ddd;
+      color: #000;
+      font-weight: bold;
+    }
+
+    tbody td {
+      color: #000; /* Ensure table content text is black */
+    }
+  </style>
 </head>
 <body><div class="section-body">
 
 <h1>Compatibility Between PO3 and NG Forks (Code-Level)</h1>
 
-<p>The two CommonLibSSE forks supported by this template differ primarily in how they expose internal runtime data:</p>
+<p>This template supports both the <strong>NG</strong> and <strong>PO3</strong> forks of CommonLibSSE by abstracting their API differences using <strong>proxy classes</strong>.</p>
+
+<p>The primary difference between the two forks is how they expose internal runtime data:</p>
 
 <ul>
   <li><strong>NG Fork:</strong> Encapsulates internal data behind accessor functions, such as <code>GetRuntimeData()</code>.</li>
-  <li><strong>PO3 Fork:</strong> Exposes data directly via public members like <code>renderer->data</code>.</li>
+  <li><strong>PO3 Fork:</strong> Exposes data directly via public members, e.g., <code>renderer->data</code>.</li>
 </ul>
 
-<p>Because of these differences, plugin code must use conditional compilation to access data correctly depending on the selected fork. For example:</p>
+<h2>Using Proxy Classes</h2>
+
+<p>To ensure compatibility across both forks, this template provides lightweight wrapper classes (proxies) that handle the fork-specific access internally. The following proxies are currently available:</p>
+
+<ul>
+  <li><code>Actor</code></li>
+  <li><code>ControlMap</code></li>
+  <li><code>PlayerCharacter</code></li>
+  <li><code>BSGraphics::Renderer</code></li>
+</ul>
+
+<p>These proxies expose a unified interface for accessing internal members and runtime data, automatically switching behavior based on whether <code>SKYRIM_SUPPORT_NG</code> is defined. All proxies are header-only and designed for minimal overhead.</p>
+
+<h2>Proxy Reference</h2>
+
+<details>
+  <summary><strong>Actor Proxy</strong></summary>
+  <table>
+    <thead>
+      <tr><th>Method</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>Data(RE::Actor*)</code></td>
+        <td>Returns pointer to the actor's runtime data</td>
+      </tr>
+      <tr>
+        <td><code>State(RE::Actor*)</code></td>
+        <td>Returns pointer to the actor's state interface</td>
+      </tr>
+    </tbody>
+  </table>
+</details>
+
+<details>
+  <summary><strong>ControlMap Proxy</strong></summary>
+  <table>
+    <thead>
+      <tr><th>Method</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>Data(RE::ControlMap*)</code></td>
+        <td>Returns pointer to the control map's runtime data</td>
+      </tr>
+    </tbody>
+  </table>
+</details>
+
+<details>
+  <summary><strong>PlayerCharacter Proxy</strong></summary>
+  <table>
+    <thead>
+      <tr><th>Method</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>ActorData(RE::PlayerCharacter*)</code></td>
+        <td>Returns pointer to the actor base runtime data for the player</td>
+      </tr>
+      <tr>
+        <td><code>ActorState(RE::PlayerCharacter*)</code></td>
+        <td>Returns pointer to the actor state interface for the player</td>
+      </tr>
+      <tr>
+        <td><code>Data(RE::PlayerCharacter*)</code></td>
+        <td>Returns pointer to the player-specific runtime data</td>
+      </tr>
+    </tbody>
+  </table>
+</details>
+
+<details>
+  <summary><strong>BSGraphics::Renderer Proxy</strong></summary>
+  <table>
+    <thead>
+      <tr><th>Method</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>Data(RE::BSGraphics::Renderer*)</code></td>
+        <td>Returns pointer to the renderer's runtime data</td>
+      </tr>
+    </tbody>
+  </table>
+</details>
+
+<h2>Example Usage</h2>
+
+<p>Instead of writing conditional code like this:</p>
 
 <pre><code class="cpp">
+auto renderer = RE::BSGraphics::Renderer::GetSingleton();
+
 #if defined(SKYRIM_SUPPORT_NG)
-    auto& runtimeData = renderer->GetRuntimeData();
-    // Access runtimeData fields here
+    auto rendererData = renderer->GetRuntimeData();
 #else
-    auto& data = renderer->data;
-    // Access data fields here
+    auto rendererData = renderer->data;
 #endif
 </code></pre>
 
-<p>This pattern is common across the API surface and ensures your code compiles and runs correctly with either fork. The macro <code>SKYRIM_SUPPORT_NG</code> is defined automatically when building with the NG fork; otherwise, PO3 compatibility is assumed.</p>
+<p>You can now simply use:</p>
+
+<pre><code class="cpp">
+auto renderer = RE::BSGraphics::Renderer::GetSingleton();
+auto rendererData = PROXY::BSGraphics::Renderer::Data(renderer);
+</code></pre>
+
+<p>This pattern applies consistently across the other proxies:</p>
+
+<pre><code class="cpp">
+auto actorData = PROXY::Actor::Data(actor);
+auto actorState = PROXY::Actor::State(actor);
+
+auto controlMap = RE::ControlMap::GetSingleton();
+auto controlMapData = PROXY::ControlMap::Data(controlMap);
+
+auto player = RE::PlayerCharacter::GetSingleton();
+auto playerData = PROXY::PlayerCharacter::Data(player);
+auto playerState = PROXY::PlayerCharacter::ActorState(player);
+
+auto renderer = RE::BSGraphics::Renderer::GetSingleton();
+auto rendererData = PROXY::BSGraphics::Renderer::Data(renderer);
+</code></pre>
+
+<p>This ensures your code remains clean, fork-agnostic, and maintainable across both NG and PO3 forks.</p>
 
 </div></body>
 </html>

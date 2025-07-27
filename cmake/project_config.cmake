@@ -104,7 +104,7 @@ target_include_directories(
 		${PROJECT_PCH_ROOT_DIR}
 		${PROJECT_EXTERN_ROOT_DIR}
 )
-# Workaround to manually setup precompiled header for cpp files which have #include "pch.h" at the top.
+# Setup precompiled header, cmake does it weird.
 if(MSVC)
 	set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "/YuPCH.h")
 	set_source_files_properties(${PROJECT_PCH_ROOT_DIR}/PCH.cpp PROPERTIES COMPILE_FLAGS "/YcPCH.h")
