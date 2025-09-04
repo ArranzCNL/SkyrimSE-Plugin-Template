@@ -3,7 +3,7 @@
 #################################################
 set(COMMONLIBSSE_NAME            "CommonLibSSE")
 set(COMMONLIBSSE_REPO_URL        "https://github.com/alandtse/CommonLibVR")
-set(COMMONLIBSSE_REPO_TAG        "394b105") # Commits on Jul 23, 2025
+set(COMMONLIBSSE_REPO_TAG        "659e9ea") # Commits on Sept 1, 2025
 set(COMMONLIBSSE_ROOT_DIR        "${PROJECT_EXTERN_ROOT_DIR}/${COMMONLIBSSE_NAME}")
 set(COMMONLIBSSE_EXTERN_ROOT_DIR "${COMMONLIBSSE_ROOT_DIR}/extern")
 #################################################

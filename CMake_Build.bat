@@ -14,7 +14,7 @@ echo    "Y8888P"  888  888  "Y88888 888     888 888  888  888  "Y8888P"  8888888
 echo                            888                                                                                        
 echo                       Y8b d88P                                                                                        
 echo                        "Y88P"                                                                                         
-echo                                                                                                                 v1.0.1 
+echo                                                                                                                 v1.0.2 
 echo  ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 echo.
 
@@ -272,6 +272,7 @@ copy /Y "cmake\templates\bare\include\plugin.h" "%PROJECT_NAME%\include\" >nul
 copy /Y "cmake\templates\bare\include\api\skse_api.h" "%PROJECT_NAME%\include\api\" >nul
 copy /Y "cmake\templates\bare\include\api\versionlibdb.h" "%PROJECT_NAME%\include\api\" >nul
 copy /Y "cmake\templates\bare\include\util\LogUtil.h" "%PROJECT_NAME%\include\util\" >nul
+copy /Y "cmake\templates\bare\include\util\StringUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\bare\pch\PCH.cpp" "%PROJECT_NAME%\pch\" >nul
 copy /Y "cmake\templates\bare\pch\PCH.h" "%PROJECT_NAME%\pch\" >nul
 copy /Y "cmake\templates\bare\resource\plugin.rc" "%PROJECT_NAME%\resource\" >nul
@@ -315,6 +316,7 @@ copy /Y "cmake\templates\basic\include\hook\FunctionHook.h" "%PROJECT_NAME%\incl
 copy /Y "cmake\templates\basic\include\hook\InputHook.h" "%PROJECT_NAME%\include\hook\" >nul
 copy /Y "cmake\templates\basic\include\hook\MainHook.h" "%PROJECT_NAME%\include\hook\" >nul
 copy /Y "cmake\templates\basic\include\util\LogUtil.h" "%PROJECT_NAME%\include\util\" >nul
+copy /Y "cmake\templates\basic\include\util\StringUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\basic\pch\PCH.cpp" "%PROJECT_NAME%\pch\" >nul
 copy /Y "cmake\templates\basic\pch\PCH.h" "%PROJECT_NAME%\pch\" >nul
 copy /Y "cmake\templates\basic\resource\plugin.rc" "%PROJECT_NAME%\resource\" >nul
@@ -377,6 +379,7 @@ copy /Y "cmake\templates\menu\include\menu\Menus.h" "%PROJECT_NAME%\include\menu
 copy /Y "cmake\templates\menu\include\menu\UIMenu.h" "%PROJECT_NAME%\include\menu\" >nul
 copy /Y "cmake\templates\menu\include\util\KeyboardUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\menu\include\util\LogUtil.h" "%PROJECT_NAME%\include\util\" >nul
+copy /Y "cmake\templates\menu\include\util\StringUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\menu\pch\PCH.cpp" "%PROJECT_NAME%\pch\" >nul
 copy /Y "cmake\templates\menu\pch\PCH.h" "%PROJECT_NAME%\pch\" >nul
 copy /Y "cmake\templates\menu\resource\plugin.rc" "%PROJECT_NAME%\resource\" >nul

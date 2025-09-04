@@ -3,6 +3,7 @@
 #include "version.h"
 #include "hook/MainHook.h"
 #include "util/LogUtil.h"
+#include "util/StringUtil.h"
 
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -15,31 +16,13 @@ namespace DLLMain {
 	static constexpr auto PLUGIN_PATH = "Data\\SKSE\\Plugins\\";
 	static constexpr REL::Version SKSE_RUNTIME_2_0_18(2, 0, 18, 0);
 
-	static std::string WideToUTF8(const std::wstring& wstr)
-	{
-		if (wstr.empty()) {
-			return {};
-		}
-
-		std::int32_t sizeRequired = WideCharToMultiByte(CP_UTF8, 0, wstr.data(), -1, nullptr, 0, nullptr, nullptr);
-		if (sizeRequired <= 0) {
-			return {};
-		}
-
-		std::string result(sizeRequired, '\0');
-		WideCharToMultiByte(CP_UTF8, 0, wstr.data(), -1, result.data(), sizeRequired, nullptr, nullptr);
-
-		result.pop_back();
-		return result;
-	}
-
 	static std::string get_game_directory(bool a_pluginPath = false)
 	{
 		wchar_t currentDirectory[MAX_PATH]{};
 		const DWORD directorySize = GetCurrentDirectoryW(MAX_PATH, currentDirectory);
 
 		if (directorySize && directorySize <= MAX_PATH) {
-			std::string path = WideToUTF8(currentDirectory);
+			std::string path = Util::String::WideToUTF8(currentDirectory);
 			if (a_pluginPath) {
 				path += '\\';
 				path += PLUGIN_PATH;

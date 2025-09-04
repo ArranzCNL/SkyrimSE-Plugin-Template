@@ -8,7 +8,7 @@
 namespace Hook {
 
 	struct GraphicsInfo {
-		HWND windowHandle{ nullptr };
+		REX::W32::HWND windowHandle{ nullptr };
 		std::string windowTitle{};
 		std::int32_t windowPosX{ 0 };
 		std::int32_t windowPosY{ 0 };
@@ -52,11 +52,10 @@ namespace Hook {
 
 	private:
 		GraphicsInfo m_info{};
-		std::once_flag m_graphicsFlag;
-
 		std::unique_ptr<Menu::UI> m_ui{ nullptr };
 
 	private:
+		friend struct CreateGraphicsDevice;
 		friend struct DXGIPresent;
 		friend void Hook::Main::Install();
 	};
