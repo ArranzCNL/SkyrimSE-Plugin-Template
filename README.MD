@@ -20,7 +20,7 @@ This setup supports selecting different CommonLibSSE forks (**PO3** or **NG**) d
 Make sure to install the following workloads/components in Visual Studio 2022:
 - Desktop development with C++
 - MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
-- Windows 10 SDK (10.0.20348.0)
+- Windows 11 SDK (10.0.26100.4654)
 
 ---
 
