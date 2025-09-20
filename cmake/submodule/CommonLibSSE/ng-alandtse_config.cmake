@@ -24,7 +24,6 @@ FetchContent_Populate(
 #################################################
 include(${CMAKE_CURRENT_LIST_DIR}/submodule/directxtk_config.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/submodule/spdlog_config.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/submodule/xbyak_config.cmake)
 #################################################
 # Patch Project
 #################################################
@@ -148,8 +147,6 @@ target_compile_definitions(
 	"${COMMONLIBSSE_NAME}" PUBLIC
 		WINVER=0x0601	# windows 7, minimum supported version by skyrim special edition
 		_WIN32_WINNT=0x0601
-		SPDLOG_COMPILED_LIB
-		SKSE_SUPPORT_XBYAK=1
 		ENABLE_SKYRIM_SE=1
 		ENABLE_SKYRIM_AE=1
 		SKYRIM_SUPPORT_NG=1

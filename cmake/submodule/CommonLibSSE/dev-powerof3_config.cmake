@@ -3,7 +3,7 @@
 #################################################
 set(COMMONLIBSSE_NAME            "CommonLibSSE")
 set(COMMONLIBSSE_REPO_URL        "https://github.com/powerof3/CommonLibSSE")
-set(COMMONLIBSSE_REPO_TAG        "b8c39ce") # Commits on Sept 04, 2025
+set(COMMONLIBSSE_REPO_TAG        "f6b2c61") # Commits on Sept 15, 2025
 set(COMMONLIBSSE_ROOT_DIR        "${PROJECT_EXTERN_ROOT_DIR}/${COMMONLIBSSE_NAME}")
 set(COMMONLIBSSE_EXTERN_ROOT_DIR "${COMMONLIBSSE_ROOT_DIR}/extern")
 #################################################
@@ -24,7 +24,6 @@ FetchContent_Populate(
 #################################################
 include(${CMAKE_CURRENT_LIST_DIR}/submodule/binary_io_config.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/submodule/spdlog_config.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/submodule/xbyak_config.cmake)
 #################################################
 # Patch Project
 #################################################
@@ -148,8 +147,6 @@ target_compile_definitions(
 	"${COMMONLIBSSE_NAME}" PUBLIC
 		WINVER=0x0601	# windows 7, minimum supported version by skyrim special edition
 		_WIN32_WINNT=0x0601
-		SPDLOG_COMPILED_LIB
-		SKSE_SUPPORT_XBYAK=1
 		"$<$<BOOL:${SKYRIM_SUPPORT_AE}>:SKYRIM_SUPPORT_AE=1>"
 )
 

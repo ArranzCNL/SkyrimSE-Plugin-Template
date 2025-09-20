@@ -3,7 +3,7 @@
 #################################################
 set(JSON_NAME       "json")
 set(JSON_REPO_URL   "https://github.com/nlohmann/json")
-set(JSON_REPO_TAG   "v3.11.3")
+set(JSON_REPO_TAG   "v3.12.0")
 set(JSON_ROOT_DIR   "${PROJECT_EXTERN_ROOT_DIR}/${JSON_NAME}")
 #################################################
 # Fetch Project

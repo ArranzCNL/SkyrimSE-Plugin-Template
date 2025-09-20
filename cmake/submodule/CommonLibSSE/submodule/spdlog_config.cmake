@@ -3,7 +3,7 @@
 #################################################
 set(SPDLOG_NAME      "spdlog")
 set(SPDLOG_REPO_URL  "https://github.com/gabime/spdlog")
-set(SPDLOG_REPO_TAG  "v1.13.0")
+set(SPDLOG_REPO_TAG  "v1.15.3")
 set(SPDLOG_ROOT_DIR  "${COMMONLIBSSE_EXTERN_ROOT_DIR}/${SPDLOG_NAME}")
 #################################################
 # Fetch Project
@@ -78,13 +78,13 @@ target_include_directories(
 )
 
 target_compile_definitions(
-	${SPDLOG_NAME} PRIVATE
+	${SPDLOG_NAME} PUBLIC
 		SPDLOG_COMPILED_LIB
 )
 
 if(MSVC)
 	target_compile_options(
-		"${SPDLOG_NAME}" PRIVATE
-			/wd4996 # 'deprecated function': required due to Microsoft STL itself using its own deprecated functions
+		"${SPDLOG_NAME}" PUBLIC
+			$<$<AND:$<COMPILE_LANGUAGE:CXX>,$<CXX_COMPILER_ID:MSVC>>:/utf-8>
 	)
 endif()

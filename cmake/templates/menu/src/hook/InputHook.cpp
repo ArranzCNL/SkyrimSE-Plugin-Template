@@ -1,7 +1,7 @@
 #include "hook/InputHook.h"
 
-#include "game/CommandsGame.h"
-#include "game/InputGame.h"
+#include "console/ConsoleCommands.h"
+#include "input/InputManager.h"
 #include "util/LogUtil.h"
 
 namespace Hook {
@@ -17,7 +17,7 @@ namespace Hook {
 				const std::string text = a_script->text;
 				// Search for specific prefix.
 				if (text.starts_with(CONSOLE_PREFIX)) {
-					Game::Commands::Plugin(a_script);
+					Console::Commands::Plugin(a_script);
 					return;
 				}
 
@@ -42,7 +42,7 @@ namespace Hook {
 				// Only care about input when the console is not open.
 				auto consoleOpen = RE::UI::GetSingleton()->IsMenuOpen(RE::Console::MENU_NAME);
 				if (!consoleOpen) {
-					handleInput = Game::RegisterInput::GetSingleton()->Update(a_event);
+					handleInput = ::Input::Manager::GetSingleton()->Update(a_event);
 				}
 
 				func(a_dispatcher, handleInput ? dummy : a_event);

@@ -1,6 +1,6 @@
 #include "hook/InputHook.h"
 
-#include "game/CommandsGame.h"
+#include "console/ConsoleCommands.h"
 
 namespace Hook {
 
@@ -15,7 +15,7 @@ namespace Hook {
 				const std::string text = a_script->text;
 				// Search for specific prefix.
 				if (text.starts_with(CONSOLE_PREFIX)) {
-					Game::Commands::Plugin(a_script);
+					Console::Commands::Plugin(a_script);
 					return;
 				}
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "hook/MainHook.h"
-#include "menu/UIMenu.h"
+#include "menu/MenuManager.h"
 
 #include <wrl/client.h>
 
@@ -52,7 +52,7 @@ namespace Hook {
 
 	private:
 		GraphicsInfo m_info{};
-		std::unique_ptr<Menu::UI> m_ui{ nullptr };
+		std::unique_ptr<Menu::Manager> m_ui{ nullptr };
 
 	private:
 		friend struct CreateGraphicsDevice;

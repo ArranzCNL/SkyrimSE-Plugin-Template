@@ -2,7 +2,7 @@
 
 #include "plugin.h"
 #include "version.h"
-#include "game/EventsGame.h"
+#include "game/GameEvents.h"
 #include "util/LogUtil.h"
 
 //#define DUMP_OFFSETS

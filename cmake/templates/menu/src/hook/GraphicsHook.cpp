@@ -60,7 +60,7 @@ namespace Hook {
 				}
 			}
 
-			graphics->m_ui = std::make_unique<Menu::UI>();
+			graphics->m_ui = std::make_unique<Menu::Manager>();
 			WndProc::func = reinterpret_cast<REX::W32::WNDPROC>(REX::W32::SetWindowLongPtrA(graphics->Info().windowHandle, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(WndProc::thunk)));
 			graphics->m_info.loaded = true;
 		}

@@ -15,6 +15,9 @@ if(INSTALL_IMGUI)
 	include(submodule/imgui_config)
 endif()
 
+# Xbyak - A JIT assembler for x86/x64 architectures
+include(submodule/xbyak_config)
+
 # JSON Support
 #include(submodule/nlohmann-json_config)
 
