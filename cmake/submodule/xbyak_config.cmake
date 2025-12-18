@@ -29,5 +29,4 @@ target_include_directories(
 target_compile_definitions(
 	${COMMONLIBSSE_NAME} PUBLIC
 		SKSE_SUPPORT_XBYAK=1
-		XBYAK_STRICT_CHECK_MEM_REG_SIZE=0
 )

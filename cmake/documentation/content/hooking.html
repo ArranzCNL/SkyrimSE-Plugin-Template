@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hooking</title>
+  <link href="styles.css" rel="stylesheet" />
+  <style>
+    /* Details summary styling */
+    details summary {
+      background-color: #f0f0f0;
+      color: #2a2a2a;
+      font-weight: bold;
+      padding: 0.5em 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 0.3em;
+      border: 1px solid #d0d0d0;
+    }
+
+    /* Add spacing between each collapsible section */
+    details {
+      margin-bottom: 1.5em;
+    }
+
+    /* Table styling */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 0.8em;
+      background-color: #fafafa;
+      border: 1px solid #ccc;
+    }
+
+    th, td {
+      padding: 0.75em 1em;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    thead {
+      background-color: #ddd;
+      color: #000;
+      font-weight: bold;
+    }
+
+    tbody td {
+      color: #000; /* Ensure table content text is black */
+    }
+  </style>
+</head>
+<body><div class="section-body">
+
+<h1>Hooking</h1>
+
+<p>Adds support for general hooking using <strong>stl::Hook</strong> (util/HookUtil.h) via Xbyak.</p>
+<ul>
+  <li><strong>stl::Hook::call(const std::uintptr_t a_target)</strong> automatically determines the correct size with write_call/branch.</li>
+  <li><strong>stl::Hook::function(const std::uintptr_t a_target, const std::size_t a_prologueSize)</strong> supports chain hooking however execution of <strong>stl::Hook::install()</strong> matters.</li>
+  <li><strong>stl::Hook::install()</strong> allocates the exact size required for the hooks. Recommended to execute from SKSE::MessagingInterface::kPostPostLoad.</li>
+</ul>
+
+<h2>Hook Reference</h2>
+
+<table>
+  <thead>
+    <tr><th>Method</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>call(const std::uintptr_t a_target)</code></td>
+      <td>Registers a short call/jump hook at the specified address.</td>
+    </tr>
+    <tr>
+      <td><code>function(const std::uintptr_t a_target, const std::size_t a_prologueSize)</code></td>
+      <td>Registers a function hook for the specified target function.</td>
+    </tr>
+	<tr>
+      <td><code>patch(std::uintptr_t a_target, std::size_t a_patchSize)</code></td>
+      <td>Registers an inline patch at the specified address.</td>
+    </tr>
+	<tr>
+      <td><code>replace(const std::uintptr_t a_target, const std::size_t a_replaceSize)</code></td>
+      <td>Replaces the instruction block at the specified address with a direct jump.</td>
+    </tr>
+	<tr>
+      <td><code>virtual_function(const std::size_t a_tableIndex, const std::size_t a_functionIndex)</code></td>
+      <td>Hooks a virtual function by replacing an entry in a vtable.</td>
+    </tr>
+	<tr>
+      <td><code>std::size_t count()</code></td>
+      <td>Returns the number of registered non-virtual hooks.</td>
+    </tr>
+	<tr>
+      <td><code>std::size_t virtualCount()</code></td>
+      <td>Returns the number of registered virtual function hooks.</td>
+    </tr>
+	<tr>
+      <td><code>install()</code></td>
+      <td>Installs all registered hooks and patches in the order they were added.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Example Usage</h2>
+
+<p>Snippets taken from Improved Camera SE v2+:</p>
+
+<pre><code class="cpp">// call
+struct ProcessInput {
+
+   static void thunk(RE::BSTEventSource&ltRE::InputEvent*&gt* a_dispatcher, RE::InputEvent* const* a_event)
+   {
+      constexpr RE::InputEvent* const dummy[]{ nullptr };
+      auto handleInput{ false };
+
+      // Error check.
+      if (!a_event || !(*a_event)) {
+         func(a_dispatcher, a_event);
+         return;
+      }
+      // Only care about input when the console is not open.
+      auto consoleOpen = RE::UI::GetSingleton()->IsMenuOpen(RE::Console::MENU_NAME);
+      if (!consoleOpen) {
+         handleInput = ::Input::Manager::GetSingleton()->Update(a_event);
+      }
+
+      func(a_dispatcher, handleInput ? dummy : a_event);
+   }
+   static inline REL::Relocation&ltdecltype(thunk)&gt func;
+};
+
+// function
+struct PlayerSwitchSkeleton {
+
+   static void thunk(RE::PlayerCharacter* a_player, bool a_firstperson)
+   {
+      // Return original function.
+      func(a_player, a_firstperson);
+   }
+   static inline REL::Relocation&ltdecltype(thunk)&gt func;
+};
+
+// patch
+struct ScrollWheel {
+
+   static void thunk(std::uintptr_t a_address)
+   {
+      std::size_t enabledControls = 0x118;
+      if (REL::Module::get().version() >= SKSE::RUNTIME_SSE_1_6_1130) {
+         enabledControls = 0x120;
+      }
+
+      // Replace original instructions with nops
+      constexpr std::size_t originalCodeSize = 6;
+      REL::safe_fill(a_address, REL::NOP, originalCodeSize);
+
+      struct Patch : Xbyak::CodeGenerator {
+
+         Patch(const std::uintptr_t a_src, const std::size_t a_offset, const std::size_t a_codeSize)
+         {
+            mov(eax, ptr[rax + a_offset]);
+            and_(cl, 0xDF);  // Delete bit #6
+            jmp(ptr[rip]);
+            dq(a_src + a_codeSize);
+         }
+      };
+      Patch patch(a_address, enabledControls, originalCodeSize);
+      patch.ready();
+
+      auto& trampoline = SKSE::GetTrampoline();
+      auto alloc = trampoline.allocate(patch.getSize());
+      std::memcpy(alloc, patch.getCode(), patch.getSize());
+
+      trampoline.write_branch<5>(a_address, alloc);
+   }
+};
+
+// replace
+struct ForceThirdPerson {
+
+   static void func()
+   {
+      RE::PlayerCamera::GetSingleton()->ForceThirdPerson();
+      LOG_DEBUG("ForceThirdPerson called.");
+      GAME::Update::GetSingleton()->ForceThirdPerson();
+   }
+};
+
+// virtual_function
+struct LookHandler {
+
+   struct ProcessMouseMove {
+
+      static void thunk(RE::LookHandler* a_handler, RE::MouseMoveEvent* a_event, RE::PlayerControlsData* a_data)
+      {
+         GAME::Update::GetSingleton()->LookEventMouse(a_event);
+         func(a_handler, a_event, a_data);
+      }
+      static inline REL::Relocation&ltdecltype(thunk)&gt func;
+   };
+};
+
+void Install()
+{
+   stl::Hook::call&ltProcessInput&gt(RELOCATION_ID(67315, 68617).address() + 0x7B);
+   stl::Hook::function&ltPlayerSwitchSkeleton&gt(RELOCATION_ID(39401, 40476).address(), 7);
+   stl::Hook::patch&ltScrollWheel&gt(RELOCATION_ID(67242, 68542).address() + RELOCATION_OFFSET(0x3D8, 0x3C8), 23);
+   stl::Hook::replace&ltForceThirdPerson&gt(RELOCATION_ID(54948, 55565).address(), 12);
+   stl::Hook::virtual_function&ltRE::LookHandler, LookHandler::ProcessMouseMove&gt(0, 3);
+}
+</code></pre>
+
+<p>To install the above hooks:</p>
+
+<pre><code class="cpp">void SKSEPlugin_Message(SKSE::MessagingInterface::Message* a_message)
+{
+   switch (a_message->type) {
+
+      case SKSE::MessagingInterface::kPostPostLoad: {
+
+#if defined(SKSE_SUPPORT_XBYAK)
+         // Install Hook(s)
+         ::stl::Hook::install();
+#endif
+         break;
+      }
+   }
+}
+</code></pre>
+
+<p>The reason for installing hooks here is due to <strong>stl::Hook::function</strong> which supports chain hooking.</p>
+
+</div></body>
+</html>

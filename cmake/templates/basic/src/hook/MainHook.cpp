@@ -5,17 +5,14 @@
 
 #include "util/LogUtil.h"
 
-namespace Hook {
+namespace HOOK::MAIN {
 
-	namespace Main {
+	void Install()
+	{
+		LOG_INFO("Hooks initializing...");
+		// Setup Variables
+		HOOK::VARIABLE::fDeltaWorldTime = reinterpret_cast<const float*>(RELOCATION_ID(523660, 410199).address());
 
-		void Install()
-		{
-			LOG_INFO("Hooks initializing...");
-			// Setup Variables
-			Hook::Variable::fDeltaWorldTime = reinterpret_cast<const float*>(RELOCATION_ID(523660, 410199).address());
-
-			Hook::Input::Install();
-		}
+		HOOK::INPUT::Install();
 	}
 }

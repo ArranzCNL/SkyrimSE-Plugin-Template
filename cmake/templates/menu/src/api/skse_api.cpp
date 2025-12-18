@@ -32,6 +32,10 @@ namespace SKSE {
 		switch (a_message->type) {
 
 			case SKSE::MessagingInterface::kPostPostLoad: {
+#if defined(SKSE_SUPPORT_XBYAK)
+				// Install Hook(s)
+				::stl::Hook::install();
+#endif
 				break;
 			}
 			case SKSE::MessagingInterface::kInputLoaded: {
@@ -39,7 +43,7 @@ namespace SKSE {
 			}
 			case SKSE::MessagingInterface::kDataLoaded: {
 				// Log plugin loaded
-				LOG_INFO("{} loaded", DLLMain::Plugin::GetSingleton()->Info().name);
+				LOG_INFO("{} loaded", DLLMAIN::Plugin::GetSingleton()->Info().name);
 				break;
 			}
 		}
@@ -78,7 +82,7 @@ namespace SKSE {
 	SKSE_API bool SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 	{
 		// Load Plugin
-		auto loadPlugin = DLLMain::Plugin::GetSingleton()->Load(a_skse);
+		auto loadPlugin = DLLMAIN::Plugin::GetSingleton()->Load(a_skse);
 		if (loadPlugin) {
 			// Register SKSE::MessagingInterface
 			SKSE::GetMessagingInterface()->RegisterListener(SKSEPlugin_Message);

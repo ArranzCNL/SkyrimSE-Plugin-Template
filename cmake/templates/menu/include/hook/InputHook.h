@@ -1,9 +1,6 @@
 #pragma once
 
-namespace Hook {
+namespace HOOK::INPUT {
 
-	namespace Input {
-
-		void Install();
-	}
+	void Install();
 }

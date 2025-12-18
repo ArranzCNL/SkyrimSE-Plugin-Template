@@ -4,16 +4,13 @@
 #include "hook/GraphicsHook.h"
 #include "util/LogUtil.h"
 
-namespace Hook {
+namespace HOOK::MAIN {
 
-	namespace Main {
+	void Install()
+	{
+		LOG_INFO("Hooks initializing...");
 
-		void Install()
-		{
-			LOG_INFO("Hooks initializing...");
-
-			Graphics::Install();
-			Input::Install();
-		}
+		HOOK::Graphics::Install();
+		HOOK::INPUT::Install();
 	}
 }

@@ -1,4 +1,5 @@
 #if defined(_DEBUG)
+	#include <Psapi.h>
 	#include <iostream>
 #endif
 

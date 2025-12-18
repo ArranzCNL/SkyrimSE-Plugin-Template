@@ -1,16 +1,16 @@
-#include "game/GameEvents.h"
+#include "event/GameEventManager.h"
 
 #include "util/LogUtil.h"
 
-namespace Game {
+namespace GAME_EVENT {
 
-	void Events::Register()
+	void Manager::Register()
 	{
-		auto gameEvent = Events::GetSingleton();
+		auto gameEvent = Manager::GetSingleton();
 		RE::UI::GetSingleton()->AddEventSink<RE::MenuOpenCloseEvent>(gameEvent);
 	}
 
-	RE::BSEventNotifyControl Events::ProcessEvent(const RE::MenuOpenCloseEvent* a_event, RE::BSTEventSource<RE::MenuOpenCloseEvent>*)
+	RE::BSEventNotifyControl Manager::ProcessEvent(const RE::MenuOpenCloseEvent* a_event, RE::BSTEventSource<RE::MenuOpenCloseEvent>*)
 	{
 		if (!a_event) {
 			return RE::BSEventNotifyControl::kContinue;

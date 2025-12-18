@@ -3,7 +3,7 @@
 #include "util/LogUtil.h"
 #include "util/StringUtil.h"
 
-namespace Hook {
+namespace HOOK {
 
 	struct WndProc {
 
@@ -12,8 +12,8 @@ namespace Hook {
 			if (uMsg == WM_KILLFOCUS) {
 
 				auto graphics = Graphics::GetSingleton();
-				if (graphics->IsMenuDisplayed(Menu::DISPLAY_MODE::kMainMenu)) {
-					graphics->DisplayMenu(Menu::DISPLAY_MODE::kMainMenu, false);
+				if (graphics->IsMenuDisplayed(UI::DISPLAY_MODE::kMainMenu)) {
+					graphics->DisplayMenu(UI::DISPLAY_MODE::kMainMenu, false);
 				}
 			}
 			return func(hWnd, uMsg, wParam, lParam);
@@ -55,17 +55,16 @@ namespace Hook {
 					std::vector<wchar_t> buffer(txtLen + 1);
 
 					if (GetWindowTextW(hwnd, buffer.data(), static_cast<int>(buffer.size()))) {
-						graphics->m_info.windowTitle = Util::String::WideToUTF8(buffer.data());
+						graphics->m_info.windowTitle = UTIL::STRING::WideToUTF8(buffer.data());
 					}
 				}
 			}
 
-			graphics->m_ui = std::make_unique<Menu::Manager>();
+			graphics->m_ui = std::make_unique<UI::Manager>();
 			WndProc::func = reinterpret_cast<REX::W32::WNDPROC>(REX::W32::SetWindowLongPtrA(graphics->Info().windowHandle, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(WndProc::thunk)));
 			graphics->m_info.loaded = true;
 		}
 		static inline REL::Relocation<decltype(thunk)> func;
-		static inline constexpr std::size_t size{ 0x5 };
 	};
 
 	struct DXGIPresent {
@@ -76,24 +75,21 @@ namespace Hook {
 
 			static auto graphics = Graphics::GetSingleton();
 
-			if (graphics->IsMenuDisplayed(Menu::DISPLAY_MODE::kMainMenu) || graphics->IsMenuDisplayed(Menu::DISPLAY_MODE::kConsole)) {
-				graphics->m_ui->BeginFrame();
-				graphics->m_ui->OnUpdate();
-				graphics->m_ui->EndFrame();
+			if (graphics->IsMenuDisplayed(UI::DISPLAY_MODE::kMainMenu) || graphics->IsMenuDisplayed(UI::DISPLAY_MODE::kConsole)) {
+				graphics->m_ui->Process();
 			}
 		}
 		static inline REL::Relocation<decltype(thunk)> func;
-		static inline constexpr std::size_t size{ 0x5 };
 	};
 
 	void Graphics::Install()
 	{
 		LOG_INFO("  Graphics");
-		stl::write_thunk_call<CreateGraphicsDevice>(RELOCATION_ID(75595, 77226).address() + RELOCATION_OFFSET(0x9, 0x275));
-		stl::write_thunk_call<DXGIPresent>(RELOCATION_ID(75461, 77246).address() + 0x9);
+		stl::Hook::call<CreateGraphicsDevice>(RELOCATION_ID(75595, 77226).address() + RELOCATION_OFFSET(0x9, 0x275));
+		stl::Hook::call<DXGIPresent>(RELOCATION_ID(75461, 77246).address() + 0x9);
 	}
 
-	bool Graphics::IsMenuDisplayed(const Menu::DISPLAY_MODE a_mode)
+	bool Graphics::IsMenuDisplayed(const UI::DISPLAY_MODE a_mode)
 	{
 		bool displayed = false;
 
@@ -105,7 +101,7 @@ namespace Hook {
 		return displayed;
 	}
 
-	void Graphics::DisplayMenu(const Menu::DISPLAY_MODE a_mode, bool a_enable)
+	void Graphics::DisplayMenu(const UI::DISPLAY_MODE a_mode, bool a_enable)
 	{
 		if (auto ui = m_ui.get()) {
 			ui->DisplayUI(a_mode, a_enable);

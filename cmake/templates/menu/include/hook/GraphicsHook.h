@@ -1,11 +1,11 @@
 #pragma once
 
 #include "hook/MainHook.h"
-#include "menu/MenuManager.h"
+#include "ui/UIManager.h"
 
 #include <wrl/client.h>
 
-namespace Hook {
+namespace HOOK {
 
 	struct GraphicsInfo {
 		REX::W32::HWND windowHandle{ nullptr };
@@ -24,8 +24,8 @@ namespace Hook {
 
 	public:
 		const GraphicsInfo& Info() { return m_info; };
-		bool IsMenuDisplayed(const Menu::DISPLAY_MODE a_mode);
-		void DisplayMenu(const Menu::DISPLAY_MODE a_mode, bool a_enable);
+		bool IsMenuDisplayed(const UI::DISPLAY_MODE a_mode);
+		void DisplayMenu(const UI::DISPLAY_MODE a_mode, bool a_enable);
 
 		template <typename... Args>
 		void ConsoleLog(std::format_string<Args...> a_msg, Args&&... a_args)
@@ -52,11 +52,11 @@ namespace Hook {
 
 	private:
 		GraphicsInfo m_info{};
-		std::unique_ptr<Menu::Manager> m_ui{ nullptr };
+		std::unique_ptr<UI::Manager> m_ui{ nullptr };
 
 	private:
 		friend struct CreateGraphicsDevice;
 		friend struct DXGIPresent;
-		friend void Hook::Main::Install();
+		friend void HOOK::MAIN::Install();
 	};
 }

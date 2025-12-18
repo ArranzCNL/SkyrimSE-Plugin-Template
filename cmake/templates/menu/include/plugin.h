@@ -2,7 +2,7 @@
 
 #include "api/skse_api.h"
 
-namespace DLLMain {
+namespace DLLMAIN {
 
 	struct PluginInfo {
 		std::string name{};

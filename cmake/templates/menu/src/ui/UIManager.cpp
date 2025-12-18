@@ -1,23 +1,23 @@
-#include "menu/MenuManager.h"
+#include "ui/UIManager.h"
 
-#include "menu/ImguiHelper.h"
+#include "ui/ImguiHelper.h"
 #include "plugin.h"
 
-namespace Menu {
+namespace UI {
 
 	Manager::Manager()
 	{
 		// Register for input updates.
-		Input::Manager::GetSingleton()->Register(this);
+		INPUT_EVENT::Manager::GetSingleton()->Register(this);
 		// Store menu layout(s), comment this line out if you do not want this.
-		m_editorFile = DLLMain::Plugin::GetSingleton()->Info().directory + "editorconfig.ini";
+		m_editorFile = DLLMAIN::Plugin::GetSingleton()->Info().directory + "editorconfig.ini";
 		// Setup context
 		ImGui::SetupContext(m_editorFile);
 		// Setup platform/renderer backends
 		ImGui::SetupBackend();
 		// Setup builtin menus
-		m_consoleMenu = std::make_unique<Console>();
-		m_mainMenu = std::make_unique<Main>();
+		m_consoleMenu = std::make_unique<MENU::Console>();
+		m_mainMenu = std::make_unique<MENU::Main>();
 	}
 
 	Manager::~Manager()
@@ -25,25 +25,11 @@ namespace Menu {
 		ImGui::ShutDown();
 	}
 
-	void Manager::BeginFrame()
+	void Manager::Process()
 	{
-		ImGui::StartFrame();
-	}
-
-	void Manager::OnUpdate()
-	{
-		if (m_displayUI.all(DISPLAY_MODE::kMainMenu)) {
-			m_mainMenu->Update();
-		}
-
-		if (m_displayUI.all(DISPLAY_MODE::kConsole)) {
-			m_consoleMenu->Update();
-		}
-	}
-
-	void Manager::EndFrame()
-	{
-		ImGui::FinalFrame();
+		this->BeginFrame();
+		this->OnUpdate();
+		this->EndFrame();
 	}
 
 	bool Manager::CharEvent(std::uint32_t a_char)
@@ -62,6 +48,7 @@ namespace Menu {
 		if (!m_displayUI.all(DISPLAY_MODE::kMainMenu)) {
 			return false;
 		}
+
 		return true;
 	}
 
@@ -116,6 +103,7 @@ namespace Menu {
 		if (!m_displayUI.all(DISPLAY_MODE::kMainMenu)) {
 			return false;
 		}
+
 		return true;
 	}
 
@@ -124,6 +112,7 @@ namespace Menu {
 		if (!m_displayUI.all(DISPLAY_MODE::kMainMenu)) {
 			return false;
 		}
+
 		return true;
 	}
 
@@ -146,6 +135,27 @@ namespace Menu {
 	void Manager::ConsoleLog(std::string_view a_msg)
 	{
 		m_consoleMenu->AddLog(a_msg.data());
+	}
+
+	void Manager::BeginFrame()
+	{
+		ImGui::StartFrame();
+	}
+
+	void Manager::OnUpdate()
+	{
+		if (m_displayUI.all(DISPLAY_MODE::kMainMenu)) {
+			m_mainMenu->Update();
+		}
+
+		if (m_displayUI.all(DISPLAY_MODE::kConsole)) {
+			m_consoleMenu->Update();
+		}
+	}
+
+	void Manager::EndFrame()
+	{
+		ImGui::FinalFrame();
 	}
 
 	void Manager::Open()

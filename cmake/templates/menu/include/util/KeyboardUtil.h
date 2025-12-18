@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Util {
+namespace UTIL {
 
 	static inline void CorrectExtendedKeys(const std::uint32_t a_scanCode, std::uint32_t* a_virtualKey)
 	{

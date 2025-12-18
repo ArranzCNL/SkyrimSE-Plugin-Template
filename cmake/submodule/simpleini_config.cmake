@@ -3,7 +3,7 @@
 #################################################
 set(SIMPLEINI_NAME       "simpleini")
 set(SIMPLEINI_REPO_URL   "https://github.com/brofield/simpleini")
-set(SIMPLEINI_REPO_TAG   "v4.22")
+set(SIMPLEINI_REPO_TAG   "v4.25")
 set(SIMPLEINI_ROOT_DIR   "${PROJECT_EXTERN_ROOT_DIR}/${SIMPLEINI_NAME}")
 #################################################
 # Fetch Project

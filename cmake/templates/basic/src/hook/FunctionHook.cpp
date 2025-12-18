@@ -1,8 +1,8 @@
 #include "hook/FunctionHook.h"
 
-namespace Hook {
+namespace HOOK {
 
-	namespace Function {
+	namespace FUNCTION {
 
 		void FadeOutGame(bool a_fadingOut, bool a_blackFade, float a_fadeTransitionDuration, bool a_holdFade, float a_fadeHoldDuration)
 		{
@@ -12,7 +12,7 @@ namespace Hook {
 		}
 	}
 
-	namespace Variable {
+	namespace VARIABLE {
 		const float* fDeltaWorldTime;
 	}
 }

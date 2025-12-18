@@ -14,7 +14,7 @@ echo    "Y8888P"  888  888  "Y88888 888     888 888  888  888  "Y8888P"  8888888
 echo                            888                                                                                        
 echo                       Y8b d88P                                                                                        
 echo                        "Y88P"                                                                                         
-echo                                                                                                                 v1.0.3 
+echo                                                                                                                 v1.0.4 
 echo  ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 echo.
 
@@ -271,6 +271,7 @@ mkdir "%PROJECT_NAME%\pch" >nul 2>&1
 copy /Y "cmake\templates\bare\include\plugin.h" "%PROJECT_NAME%\include\" >nul
 copy /Y "cmake\templates\bare\include\api\skse_api.h" "%PROJECT_NAME%\include\api\" >nul
 copy /Y "cmake\templates\bare\include\api\versionlibdb.h" "%PROJECT_NAME%\include\api\" >nul
+copy /Y "cmake\templates\bare\include\util\HookUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\bare\include\util\LogUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\bare\include\util\StringUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\bare\pch\PCH.cpp" "%PROJECT_NAME%\pch\" >nul
@@ -296,13 +297,14 @@ mkdir %PROJECT_NAME% >nul 2>&1
 mkdir "%PROJECT_NAME%\include" >nul 2>&1
 mkdir "%PROJECT_NAME%\include\api" >nul 2>&1
 mkdir "%PROJECT_NAME%\include\console" >nul 2>&1
+mkdir "%PROJECT_NAME%\include\event" >nul 2>&1
 mkdir "%PROJECT_NAME%\include\game" >nul 2>&1
 mkdir "%PROJECT_NAME%\include\hook" >nul 2>&1
 mkdir "%PROJECT_NAME%\include\util" >nul 2>&1
 mkdir "%PROJECT_NAME%\src" >nul 2>&1
 mkdir "%PROJECT_NAME%\src\api" >nul 2>&1
 mkdir "%PROJECT_NAME%\src\console" >nul 2>&1
-mkdir "%PROJECT_NAME%\src\game" >nul 2>&1
+mkdir "%PROJECT_NAME%\src\event" >nul 2>&1
 mkdir "%PROJECT_NAME%\src\hook" >nul 2>&1
 mkdir "%PROJECT_NAME%\resource" >nul 2>&1
 mkdir "%PROJECT_NAME%\pch" >nul 2>&1
@@ -312,11 +314,12 @@ copy /Y "cmake\templates\basic\include\plugin.h" "%PROJECT_NAME%\include\" >nul
 copy /Y "cmake\templates\basic\include\api\skse_api.h" "%PROJECT_NAME%\include\api\" >nul
 copy /Y "cmake\templates\basic\include\api\versionlibdb.h" "%PROJECT_NAME%\include\api\" >nul
 copy /Y "cmake\templates\basic\include\console\ConsoleCommands.h" "%PROJECT_NAME%\include\console\" >nul
-copy /Y "cmake\templates\basic\include\game\GameEvents.h" "%PROJECT_NAME%\include\game\" >nul
+copy /Y "cmake\templates\basic\include\event\GameEventManager.h" "%PROJECT_NAME%\include\event\" >nul
 copy /Y "cmake\templates\basic\include\game\GameHelper.h" "%PROJECT_NAME%\include\game\" >nul
 copy /Y "cmake\templates\basic\include\hook\FunctionHook.h" "%PROJECT_NAME%\include\hook\" >nul
 copy /Y "cmake\templates\basic\include\hook\InputHook.h" "%PROJECT_NAME%\include\hook\" >nul
 copy /Y "cmake\templates\basic\include\hook\MainHook.h" "%PROJECT_NAME%\include\hook\" >nul
+copy /Y "cmake\templates\basic\include\util\HookUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\basic\include\util\LogUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\basic\include\util\StringUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\basic\pch\PCH.cpp" "%PROJECT_NAME%\pch\" >nul
@@ -326,7 +329,7 @@ copy /Y "cmake\templates\basic\src\dllmain.cpp" "%PROJECT_NAME%\src\" >nul
 copy /Y "cmake\templates\basic\src\plugin.cpp" "%PROJECT_NAME%\src\" >nul
 copy /Y "cmake\templates\basic\src\api\skse_api.cpp" "%PROJECT_NAME%\src\api\" >nul
 copy /Y "cmake\templates\basic\src\console\ConsoleCommands.cpp" "%PROJECT_NAME%\src\console\" >nul
-copy /Y "cmake\templates\basic\src\game\GameEvents.cpp" "%PROJECT_NAME%\src\game\" >nul
+copy /Y "cmake\templates\basic\src\event\GameEventManager.cpp" "%PROJECT_NAME%\src\event\" >nul
 copy /Y "cmake\templates\basic\src\hook\FunctionHook.cpp" "%PROJECT_NAME%\src\hook\" >nul
 copy /Y "cmake\templates\basic\src\hook\InputHook.cpp" "%PROJECT_NAME%\src\hook\" >nul
 copy /Y "cmake\templates\basic\src\hook\MainHook.cpp" "%PROJECT_NAME%\src\hook\" >nul
@@ -347,19 +350,19 @@ mkdir %PROJECT_NAME% >nul 2>&1
 mkdir "%PROJECT_NAME%\include" >nul 2>&1
 mkdir "%PROJECT_NAME%\include\api" >nul 2>&1
 mkdir "%PROJECT_NAME%\include\console" >nul 2>&1
+mkdir "%PROJECT_NAME%\include\event" >nul 2>&1
 mkdir "%PROJECT_NAME%\include\hook" >nul 2>&1
-mkdir "%PROJECT_NAME%\include\input" >nul 2>&1
-mkdir "%PROJECT_NAME%\include\menu" >nul 2>&1
-mkdir "%PROJECT_NAME%\include\menu\fonts" >nul 2>&1
-mkdir "%PROJECT_NAME%\include\menu\menus" >nul 2>&1
+mkdir "%PROJECT_NAME%\include\ui" >nul 2>&1
+mkdir "%PROJECT_NAME%\include\ui\menu" >nul 2>&1
+mkdir "%PROJECT_NAME%\include\ui\menu\fonts" >nul 2>&1
 mkdir "%PROJECT_NAME%\include\util" >nul 2>&1
 mkdir "%PROJECT_NAME%\src" >nul 2>&1
 mkdir "%PROJECT_NAME%\src\api" >nul 2>&1
 mkdir "%PROJECT_NAME%\src\console" >nul 2>&1
+mkdir "%PROJECT_NAME%\src\event" >nul 2>&1
 mkdir "%PROJECT_NAME%\src\hook" >nul 2>&1
-mkdir "%PROJECT_NAME%\src\input" >nul 2>&1
-mkdir "%PROJECT_NAME%\src\menu" >nul 2>&1
-mkdir "%PROJECT_NAME%\src\menu\menus" >nul 2>&1
+mkdir "%PROJECT_NAME%\src\ui" >nul 2>&1
+mkdir "%PROJECT_NAME%\src\ui\menu" >nul 2>&1
 mkdir "%PROJECT_NAME%\resource" >nul 2>&1
 mkdir "%PROJECT_NAME%\pch" >nul 2>&1
 
@@ -368,19 +371,20 @@ copy /Y "cmake\templates\menu\include\plugin.h" "%PROJECT_NAME%\include\" >nul
 copy /Y "cmake\templates\menu\include\api\skse_api.h" "%PROJECT_NAME%\include\api\" >nul
 copy /Y "cmake\templates\menu\include\api\versionlibdb.h" "%PROJECT_NAME%\include\api\" >nul
 copy /Y "cmake\templates\menu\include\console\ConsoleCommands.h" "%PROJECT_NAME%\include\console\" >nul
+copy /Y "cmake\templates\menu\include\event\InputEventManager.h" "%PROJECT_NAME%\include\event\" >nul
 copy /Y "cmake\templates\menu\include\hook\GraphicsHook.h" "%PROJECT_NAME%\include\hook\" >nul
 copy /Y "cmake\templates\menu\include\hook\InputHook.h" "%PROJECT_NAME%\include\hook\" >nul
 copy /Y "cmake\templates\menu\include\hook\MainHook.h" "%PROJECT_NAME%\include\hook\" >nul
-copy /Y "cmake\templates\menu\include\input\InputManager.h" "%PROJECT_NAME%\include\input\" >nul
-copy /Y "cmake\templates\menu\include\menu\fonts\fa-solid-900.h" "%PROJECT_NAME%\include\menu\fonts\" >nul
-copy /Y "cmake\templates\menu\include\menu\fonts\IconsFontAwesome6Menu.h" "%PROJECT_NAME%\include\menu\fonts\" >nul
-copy /Y "cmake\templates\menu\include\menu\menus\PlayerMenu.h" "%PROJECT_NAME%\include\menu\menus\" >nul
-copy /Y "cmake\templates\menu\include\menu\ConsoleMenu.h" "%PROJECT_NAME%\include\menu\" >nul
-copy /Y "cmake\templates\menu\include\menu\IMenu.h" "%PROJECT_NAME%\include\menu\" >nul
-copy /Y "cmake\templates\menu\include\menu\ImguiHelper.h" "%PROJECT_NAME%\include\menu\" >nul
-copy /Y "cmake\templates\menu\include\menu\MainMenu.h" "%PROJECT_NAME%\include\menu\" >nul
-copy /Y "cmake\templates\menu\include\menu\Menus.h" "%PROJECT_NAME%\include\menu\" >nul
-copy /Y "cmake\templates\menu\include\menu\MenuManager.h" "%PROJECT_NAME%\include\menu\" >nul
+copy /Y "cmake\templates\menu\include\ui\menu\fonts\fa-solid-900.h" "%PROJECT_NAME%\include\ui\menu\fonts\" >nul
+copy /Y "cmake\templates\menu\include\ui\menu\fonts\IconsFontAwesome6Menu.h" "%PROJECT_NAME%\include\ui\menu\fonts\" >nul
+copy /Y "cmake\templates\menu\include\ui\menu\ConsoleMenu.h" "%PROJECT_NAME%\include\ui\menu\" >nul
+copy /Y "cmake\templates\menu\include\ui\menu\IMenu.h" "%PROJECT_NAME%\include\ui\menu\" >nul
+copy /Y "cmake\templates\menu\include\ui\menu\MainMenu.h" "%PROJECT_NAME%\include\ui\menu\" >nul
+copy /Y "cmake\templates\menu\include\ui\menu\Menus.h" "%PROJECT_NAME%\include\ui\menu\" >nul
+copy /Y "cmake\templates\menu\include\ui\menu\PlayerMenu.h" "%PROJECT_NAME%\include\ui\menu\" >nul
+copy /Y "cmake\templates\menu\include\ui\ImguiHelper.h" "%PROJECT_NAME%\include\ui\" >nul
+copy /Y "cmake\templates\menu\include\ui\UIManager.h" "%PROJECT_NAME%\include\ui\" >nul
+copy /Y "cmake\templates\menu\include\util\HookUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\menu\include\util\KeyboardUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\menu\include\util\LogUtil.h" "%PROJECT_NAME%\include\util\" >nul
 copy /Y "cmake\templates\menu\include\util\StringUtil.h" "%PROJECT_NAME%\include\util\" >nul
@@ -391,16 +395,16 @@ copy /Y "cmake\templates\menu\src\dllmain.cpp" "%PROJECT_NAME%\src\" >nul
 copy /Y "cmake\templates\menu\src\plugin.cpp" "%PROJECT_NAME%\src\" >nul
 copy /Y "cmake\templates\menu\src\api\skse_api.cpp" "%PROJECT_NAME%\src\api\" >nul
 copy /Y "cmake\templates\menu\src\console\ConsoleCommands.cpp" "%PROJECT_NAME%\src\console\" >nul
+copy /Y "cmake\templates\menu\src\event\InputEventManager.cpp" "%PROJECT_NAME%\src\event\" >nul
 copy /Y "cmake\templates\menu\src\hook\GraphicsHook.cpp" "%PROJECT_NAME%\src\hook\" >nul
 copy /Y "cmake\templates\menu\src\hook\InputHook.cpp" "%PROJECT_NAME%\src\hook\" >nul
 copy /Y "cmake\templates\menu\src\hook\MainHook.cpp" "%PROJECT_NAME%\src\hook\" >nul
-copy /Y "cmake\templates\menu\src\input\InputManager.cpp" "%PROJECT_NAME%\src\input\" >nul
-copy /Y "cmake\templates\menu\src\menu\menus\PlayerMenu.cpp" "%PROJECT_NAME%\src\menu\menus\" >nul
-copy /Y "cmake\templates\menu\src\menu\ConsoleMenu.cpp" "%PROJECT_NAME%\src\menu\" >nul
-copy /Y "cmake\templates\menu\src\menu\IMenu.cpp" "%PROJECT_NAME%\src\menu\" >nul
-copy /Y "cmake\templates\menu\src\menu\ImguiHelper.cpp" "%PROJECT_NAME%\src\menu\" >nul
-copy /Y "cmake\templates\menu\src\menu\MainMenu.cpp" "%PROJECT_NAME%\src\menu\" >nul
-copy /Y "cmake\templates\menu\src\menu\MenuManager.cpp" "%PROJECT_NAME%\src\menu\" >nul
+copy /Y "cmake\templates\menu\src\ui\menu\ConsoleMenu.cpp" "%PROJECT_NAME%\src\ui\menu\" >nul
+copy /Y "cmake\templates\menu\src\ui\menu\IMenu.cpp" "%PROJECT_NAME%\src\ui\menu\" >nul
+copy /Y "cmake\templates\menu\src\ui\menu\MainMenu.cpp" "%PROJECT_NAME%\src\ui\menu\" >nul
+copy /Y "cmake\templates\menu\src\ui\menu\PlayerMenu.cpp" "%PROJECT_NAME%\src\ui\menu\" >nul
+copy /Y "cmake\templates\menu\src\ui\ImguiHelper.cpp" "%PROJECT_NAME%\src\ui\" >nul
+copy /Y "cmake\templates\menu\src\ui\UIManager.cpp" "%PROJECT_NAME%\src\ui\" >nul
 copy /Y "cmake\templates\.clang-format" "%PROJECT_NAME%\" >nul
 
 set TEMPLATE_NAME=Menu

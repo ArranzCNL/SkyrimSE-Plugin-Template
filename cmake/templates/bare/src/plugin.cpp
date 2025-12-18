@@ -7,7 +7,9 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-namespace DLLMain {
+#include <Psapi.h>
+
+namespace DLLMAIN {
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Helper Functions
@@ -21,7 +23,7 @@ namespace DLLMain {
 		const DWORD directorySize = GetCurrentDirectoryW(MAX_PATH, currentDirectory);
 
 		if (directorySize && directorySize <= MAX_PATH) {
-			std::string path = Util::String::WideToUTF8(currentDirectory);
+			std::string path = UTIL::STRING::WideToUTF8(currentDirectory);
 			if (a_pluginPath) {
 				path += '\\';
 				path += PLUGIN_PATH;
@@ -49,7 +51,7 @@ namespace DLLMain {
 		std::vector<spdlog::sink_ptr> sinks{ fileSink };
 #endif
 		// Register logger
-		auto logger = std::make_shared<spdlog::logger>(Util::LOGGER_NAME, sinks.begin(), sinks.end());
+		auto logger = std::make_shared<spdlog::logger>(UTIL::LOGGER_NAME, sinks.begin(), sinks.end());
 		logger->set_level(spdlog::level::trace);
 		logger->flush_on(spdlog::level::trace);
 		spdlog::register_logger(logger);

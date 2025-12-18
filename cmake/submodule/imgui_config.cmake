@@ -3,7 +3,7 @@
 #################################################
 set(IMGUI_NAME      "imgui")
 set(IMGUI_REPO_URL  "https://github.com/ocornut/imgui")
-set(IMGUI_REPO_TAG  "v1.92.3")
+set(IMGUI_REPO_TAG  "v1.92.5")
 set(IMGUI_ROOT_DIR  "${PROJECT_EXTERN_ROOT_DIR}/${IMGUI_NAME}")
 #################################################
 # Fetch Project

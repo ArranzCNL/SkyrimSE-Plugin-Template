@@ -1,9 +1,6 @@
 #pragma once
 
-namespace Console {
+namespace CONSOLE::COMMANDS {
 
-	namespace Commands {
-
-		void Plugin(RE::Script* a_script);
-	}
+	void Plugin(RE::Script* a_script);
 }

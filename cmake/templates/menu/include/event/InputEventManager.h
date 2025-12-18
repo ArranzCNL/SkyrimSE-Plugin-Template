@@ -1,10 +1,10 @@
 #pragma once
 
-namespace Hook::Input {
+namespace HOOK::INPUT {
 	struct ProcessInput;
 }
 
-namespace Input {
+namespace INPUT_EVENT {
 
 	class Process {
 
@@ -24,13 +24,14 @@ namespace Input {
 
 	public:
 		void Register(Process* a_process);
+		void Unregister(Process* a_process);
 
 	private:
 		bool Update(RE::InputEvent* const* a_event);
 
 	private:
-		std::vector<Process*> m_processes;
+		std::unordered_set<Process*> m_processes;
 
-		friend struct Hook::Input::ProcessInput;
+		friend struct HOOK::INPUT::ProcessInput;
 	};
 }

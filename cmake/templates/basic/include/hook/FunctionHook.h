@@ -1,8 +1,8 @@
 #pragma once
 
-namespace Hook {
+namespace HOOK {
 
-	namespace Function {
+	namespace FUNCTION {
 
 		// a_fadingOut:                      Fade game out or in.
 		// a_blackFade:                      Black or white fade colour.
@@ -12,7 +12,7 @@ namespace Hook {
 		void FadeOutGame(bool a_fadingOut, bool a_blackFade, float a_fadeInOutDuration, bool a_holdFade, float a_fadeHoldDuration);
 	}
 
-	namespace Variable {
+	namespace VARIABLE {
 
 		extern const float* fDeltaWorldTime;
 	}

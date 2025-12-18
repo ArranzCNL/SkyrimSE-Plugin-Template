@@ -3,7 +3,7 @@
 #################################################
 set(COMMONLIBSSE_NAME            "CommonLibSSE")
 set(COMMONLIBSSE_REPO_URL        "https://github.com/powerof3/CommonLibSSE")
-set(COMMONLIBSSE_REPO_TAG        "f6b2c61") # Commits on Sept 15, 2025
+set(COMMONLIBSSE_REPO_TAG        "5eefb20") # Commit on Dec 18, 2025
 set(COMMONLIBSSE_ROOT_DIR        "${PROJECT_EXTERN_ROOT_DIR}/${COMMONLIBSSE_NAME}")
 set(COMMONLIBSSE_EXTERN_ROOT_DIR "${COMMONLIBSSE_ROOT_DIR}/extern")
 #################################################

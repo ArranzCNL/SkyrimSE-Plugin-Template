@@ -1,8 +1,8 @@
 #pragma once
 
-namespace Game {
+namespace GAME_EVENT {
 
-	class Events final : public REX::Singleton<Events>,
+	class Manager final : public REX::Singleton<Manager>,
                          public RE::BSTEventSink<RE::MenuOpenCloseEvent> {
 
 	public:

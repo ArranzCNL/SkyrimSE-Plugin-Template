@@ -3,7 +3,7 @@
 #################################################
 set(DIRECTXTK_NAME     "DirectXTK")
 set(DIRECTXTK_REPO_URL "https://github.com/microsoft/DirectXTK")
-set(DIRECTXTK_REPO_TAG "mar2025")
+set(DIRECTXTK_REPO_TAG "oct2025")
 set(DIRECTXTK_ROOT_DIR "${COMMONLIBSSE_EXTERN_ROOT_DIR}/${DIRECTXTK_NAME}")
 #################################################
 # Fetch Project

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "input/InputManager.h"
-#include "menu/ConsoleMenu.h"
-#include "menu/MainMenu.h"
+#include "event/InputEventManager.h"
+#include "ui/menu/ConsoleMenu.h"
+#include "ui/menu/MainMenu.h"
 
-namespace Menu {
+namespace UI {
 
 	enum class DISPLAY_MODE {
 		kNone = 0,
@@ -14,20 +14,17 @@ namespace Menu {
 		kAll = static_cast<std::underlying_type_t<DISPLAY_MODE>>(-1)
 	};
 
-	class Manager final : public Input::Process {
+	class Manager final : public INPUT_EVENT::Process {
 
 	public:
 		Manager();
 		virtual ~Manager();
 
-		void BeginFrame();
-		void OnUpdate();
-		void EndFrame();
-
+		void Process();
 		void DisplayUI(const DISPLAY_MODE a_mode, bool a_enable);
 		constexpr bool IsDisplayed(DISPLAY_MODE a_mode) const noexcept { return m_displayUI.all(a_mode); }
 		void ConsoleLog(std::string_view a_msg);
-		// Input::Process
+		// INPUT_EVENT::Process
 		virtual bool CharEvent(std::uint32_t a_char) override;
 		virtual bool GamepadButtonEvent(RE::ButtonEvent* const a_buttonEvent) override;
 		virtual bool KeyboardEvent(RE::ButtonEvent* const a_buttonEvent, std::uint32_t a_virtualKey) override;
@@ -36,6 +33,10 @@ namespace Menu {
 		virtual bool ThumbstickEvent(RE::ThumbstickEvent* const a_thumbstickEvent) override;
 
 	private:
+		void BeginFrame();
+		void OnUpdate();
+		void EndFrame();
+
 		void Open();
 		void Close();
 
@@ -43,7 +44,7 @@ namespace Menu {
 		REX::EnumSet<DISPLAY_MODE, std::uint32_t> m_displayUI;
 		std::string m_editorFile{};
 
-		std::unique_ptr<Main> m_mainMenu{ nullptr };
-		std::unique_ptr<Console> m_consoleMenu{ nullptr };
+		std::unique_ptr<MENU::Main> m_mainMenu{ nullptr };
+		std::unique_ptr<MENU::Console> m_consoleMenu{ nullptr };
 	};
 }
