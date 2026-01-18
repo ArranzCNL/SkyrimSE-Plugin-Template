@@ -32,5 +32,14 @@ namespace PROXY {
 			return a_player;
 #endif
 		}
+
+		static auto* MagicTarget(RE::PlayerCharacter* a_player)
+		{
+#if defined(SKYRIM_SUPPORT_NG)
+			return a_player->AsMagicTarget();
+#else
+			return a_player;
+#endif
+		}
 	};
 }

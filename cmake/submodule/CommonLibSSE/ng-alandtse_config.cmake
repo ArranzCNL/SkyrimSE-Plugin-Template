@@ -3,7 +3,7 @@
 #################################################
 set(COMMONLIBSSE_NAME            "CommonLibSSE")
 set(COMMONLIBSSE_REPO_URL        "https://github.com/alandtse/CommonLibVR")
-set(COMMONLIBSSE_REPO_TAG        "e0e0c86") # Commit on Dec 12, 2025
+set(COMMONLIBSSE_REPO_TAG        "0aeb311") # Commit on Jan 17, 2026
 set(COMMONLIBSSE_ROOT_DIR        "${PROJECT_EXTERN_ROOT_DIR}/${COMMONLIBSSE_NAME}")
 set(COMMONLIBSSE_EXTERN_ROOT_DIR "${COMMONLIBSSE_ROOT_DIR}/extern")
 #################################################
@@ -37,6 +37,8 @@ set(PATCH_FILES
 	"include/PROXY/ControlMapProxy.h"
 	"include/PROXY/PlayerCharacterProxy.h"
 	"include/PROXY/RendererProxy.h"
+	
+	"include/RE/E/ExtraLevCreaModifier.h"
 	# src
 )
 

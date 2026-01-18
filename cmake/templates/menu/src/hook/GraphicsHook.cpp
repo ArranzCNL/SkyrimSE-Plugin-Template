@@ -74,10 +74,7 @@ namespace HOOK {
 			func(a_timer);
 
 			static auto graphics = Graphics::GetSingleton();
-
-			if (graphics->IsMenuDisplayed(UI::DISPLAY_MODE::kMainMenu) || graphics->IsMenuDisplayed(UI::DISPLAY_MODE::kConsole)) {
-				graphics->m_ui->Process();
-			}
+			graphics->m_ui->Process();
 		}
 		static inline REL::Relocation<decltype(thunk)> func;
 	};

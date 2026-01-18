@@ -3,7 +3,7 @@
 #################################################
 set(SPDLOG_NAME      "spdlog")
 set(SPDLOG_REPO_URL  "https://github.com/gabime/spdlog")
-set(SPDLOG_REPO_TAG  "v1.16.0")
+set(SPDLOG_REPO_TAG  "v1.17.0")
 set(SPDLOG_ROOT_DIR  "${COMMONLIBSSE_EXTERN_ROOT_DIR}/${SPDLOG_NAME}")
 #################################################
 # Fetch Project
